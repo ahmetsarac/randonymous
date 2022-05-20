@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:randonymous/screens/home_screen.dart';
 
 void main() {
-  runApp(const Randonymous());
+  runApp(const ProviderScope(child: Randonymous()));
 }
 
 class Randonymous extends StatelessWidget {
@@ -14,9 +16,7 @@ class Randonymous extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Scaffold(
-        body: Center(child: Text('Randonymous')),
-      ),
+      home: const HomeScreen(),
     );
   }
 }
