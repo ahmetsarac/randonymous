@@ -56,13 +56,19 @@ class SignalingNotifier extends ChangeNotifier {
         .toList();
     debugPrint(openRooms.toString());
     if (openRooms.isEmpty) {
-      createRoom();
+      await createRoom();
     } else {
       var randomItem = (openRooms..shuffle()).first;
       roomId = randomItem;
-      joinRoom();
+      await joinRoom();
     }
     isCalling = true;
+
+    db.collection('rooms').doc(roomId).snapshots().listen((snapshot) async {
+      if (!snapshot.exists) {
+        hangUp();
+      }
+    });
     notifyListeners();
   }
 
