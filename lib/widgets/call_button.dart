@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:randonymous/providers/calling_provider.dart';
 import 'package:randonymous/providers/signaling_provider.dart';
 
 class CallButton extends ConsumerWidget {
@@ -8,7 +7,7 @@ class CallButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isCalling = ref.watch(isCallingProvider);
+    final isCalling = ref.watch(signalingProvider).isCalling;
     return Material(
       color: isCalling
           ? Theme.of(context).errorColor
@@ -21,11 +20,9 @@ class CallButton extends ConsumerWidget {
           if (signaling.permissionStatus == false) {
             await signaling.getMicrophoneAccess();
           }
-          if (signaling.permissionStatus && isCalling == false) {
-            ref.read(isCallingProvider.notifier).changeCallingStatus();
+          if (signaling.permissionStatus && signaling.isCalling == false) {
             signaling.makeCall();
           } else {
-            ref.read(isCallingProvider.notifier).changeCallingStatus();
             signaling.hangUp();
           }
         },

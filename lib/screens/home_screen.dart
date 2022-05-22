@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:randonymous/providers/calling_provider.dart';
 import 'package:randonymous/providers/signaling_provider.dart';
 import 'package:randonymous/widgets/call_button.dart';
 
@@ -30,7 +29,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isCalling = ref.watch(isCallingProvider);
+    final isCalling = ref.watch(signalingProvider).isCalling;
 
     return Scaffold(
       appBar: AppBar(

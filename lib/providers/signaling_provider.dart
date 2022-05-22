@@ -14,6 +14,7 @@ class SignalingNotifier extends ChangeNotifier {
   RTCPeerConnection? peerConnection;
   String? roomId;
   bool permissionStatus = false;
+  bool isCalling = false;
 
   final configuration = {
     'iceServers': [
@@ -61,6 +62,8 @@ class SignalingNotifier extends ChangeNotifier {
       roomId = randomItem;
       joinRoom();
     }
+    isCalling = true;
+    notifyListeners();
   }
 
   Future<void> createRoom() async {
@@ -241,6 +244,7 @@ class SignalingNotifier extends ChangeNotifier {
 
     //localStream!.dispose();
     remoteStream?.dispose();
+    isCalling = false;
     notifyListeners();
   }
 }
